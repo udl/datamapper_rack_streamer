@@ -1,0 +1,6 @@
+%html
+  %body
+    %ul
+      - Shop.all.each do |shop|
+        %li
+          %a{:href=>"/demo/#{shop.id}/products.csv"}= shop.name
