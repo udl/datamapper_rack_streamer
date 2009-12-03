@@ -1,7 +1,3 @@
-# 
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
- 
 
 require 'rubygems'
 require 'rake'
@@ -16,10 +12,10 @@ spec = Gem::Specification.new do |s|
   s.version = '0.0.1'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README', 'LICENSE']
-  s.summary = 'Your summary here'
+  s.summary = 'Fetches data via data_mapper and streams it as csv via rack'
   s.description = s.summary
-  s.author = ''
-  s.email = ''
+  s.author = 'ugroebner'
+  s.email = 'ugroebner@crealytics.de'
   # s.executables = ['your_executable_here']
   s.files = %w(LICENSE README Rakefile) + Dir.glob("{bin,lib,spec}/**/*")
   s.require_path = "lib"
