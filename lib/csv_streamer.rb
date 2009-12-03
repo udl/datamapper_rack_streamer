@@ -1,7 +1,6 @@
 require 'iconv'
 require 'stringio'
 
-
 class CsvStreamer
   BYTE_ARRAY_UTF_BOM = [0xff, 0xfe].collect{|byte| byte.chr}.join
   UTF_16_LE_ICONV = Iconv.new('UTF-16LE', 'UTF-8')

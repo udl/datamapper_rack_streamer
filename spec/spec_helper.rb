@@ -1,9 +1,10 @@
 $LOAD_PATH << File.dirname(__FILE__)+'/../lib/'
+$LOAD_PATH << File.dirname(__FILE__)+'/../demo/'
 require "spec" # Satisfies Autotest and anyone else not using the Rake tasks
 require 'rr'
 require 'datamapper'
-require 'model/shop'
-require 'model/product'
+require 'demo/model/shop'
+require 'demo/model/product'
 
 DataMapper::Logger.new(STDOUT, :debug)
 DataMapper.setup(:products, 'sqlite3::memory:')

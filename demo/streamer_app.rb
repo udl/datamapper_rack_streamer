@@ -2,7 +2,7 @@ require 'sinatra'
 require 'haml'
 require 'model/shop'
 require 'model/product'
-require File.dirname(__FILE__)+'/csv_streamer'
+require File.dirname(__FILE__)+'/../lib/csv_streamer'
 
 PATH_TO_HAML = File.expand_path(File.dirname(__FILE__)+'/demo.haml')
 

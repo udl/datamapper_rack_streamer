@@ -4,4 +4,4 @@ This project streams data from a database to a client via a web-interface.
 It uses DataMapper for data retrieval and Sinatra/Rack combo for serving the interface.
 The data is streamed as csv.
 
-For more information see streamer_app and spec.
+For more information see demo project streamer_app and spec.
