@@ -3,6 +3,8 @@ $LOAD_PATH << File.dirname(__FILE__)+'/../demo/'
 require "spec" # Satisfies Autotest and anyone else not using the Rake tasks
 require 'rr'
 require 'datamapper'
+require 'ostruct'
+require 'pp'
 require 'demo/model/shop'
 require 'demo/model/product'
 
