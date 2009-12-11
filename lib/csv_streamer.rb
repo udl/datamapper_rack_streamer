@@ -8,10 +8,11 @@ class CsvStreamer
   COLUMN_SEPARATOR = "\t"
   ROW_SEPARATOR = "\n"
   attr_reader :csv_sequence
-  def initialize(model_class,ids,csv_sequence = nil, &block)
+  def initialize(model_class,ids,csv_sequence = nil, per_page = 1000, &block)
     @ids = ids
     @model_class = model_class
     @csv_sequence = csv_sequence || self.class.csv_sequence(@model_class)
+    @per_page = per_page
     @block = block
   end
   
@@ -25,12 +26,11 @@ class CsvStreamer
 
   def each
     elements_count = @ids.size
-    per_page = 1000
     page_counter = 0
     yield BYTE_ARRAY_UTF_BOM
     yield to_csv(@csv_sequence)
-    while (page_counter * per_page <= elements_count)  do
-      elements = @model_class.all(:id=>@ids[page_counter*per_page,per_page])
+    while (page_counter * @per_page <= elements_count)  do
+      elements = @model_class.all(:id=>@ids[page_counter*@per_page,@per_page])
       elements.each do |element|
         element = @block.call(element) unless @block.nil?
         csv = to_csv(@csv_sequence.collect do |field|
