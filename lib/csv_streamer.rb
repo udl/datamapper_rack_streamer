@@ -34,7 +34,9 @@ class CsvStreamer
       elements.each do |element|
         element = @block.call(element) unless @block.nil?
         csv = to_csv(@csv_sequence.collect do |field|
-            element.send(field)
+            fieldval = element.send(field)
+            fieldval = fieldval.to_s.gsub('.',',') if fieldval.to_f
+            fieldval
           end)
         yield StringIO.new(csv).read
       end
