@@ -8,11 +8,12 @@ class CsvStreamer
   COLUMN_SEPARATOR = "\t"
   ROW_SEPARATOR = "\n"
   attr_reader :csv_sequence
-  def initialize(model_class,ids,csv_sequence = nil, per_page = 1000, &block)
+  def initialize(model_class,ids,csv_sequence = nil, per_page = 1000, filter_mappings = {}, &block)
     @ids = ids
     @model_class = model_class
     @csv_sequence = csv_sequence || self.class.csv_sequence(@model_class)
     @per_page = per_page
+    @filter_mappings = filter_mappings
     @block = block
   end
   
@@ -35,7 +36,10 @@ class CsvStreamer
         element = @block.call(element) unless @block.nil?
         csv = to_csv(@csv_sequence.collect do |field|
             fieldval = element.send(field)
-            fieldval = fieldval.to_s.gsub('.',',') if fieldval.to_f
+            if @filter_mappings.has_key?(field)
+              filterblock = eval "Proc.new {#{@filter_mappings[field]}}"
+              fieldval = filterblock.call(fieldval)
+            end
             fieldval
           end)
         yield StringIO.new(csv).read
