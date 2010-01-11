@@ -5,7 +5,6 @@ require 'rake/clean'
 require 'rake/gempackagetask'
 require 'rake/rdoctask'
 require 'rake/testtask'
-require 'spec/rake/spectask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'DatamapperRackStreamer'
@@ -35,12 +34,4 @@ Rake::RDocTask.new do |rdoc|
   rdoc.title = "DatamapperRackStreamer Docs"
   rdoc.rdoc_dir = 'doc/rdoc' # rdoc output folder
   rdoc.options << '--line-numbers'
-end
-
-Rake::TestTask.new do |t|
-  t.test_files = FileList['test/**/*.rb']
-end
-
-Spec::Rake::SpecTask.new do |t|
-  t.spec_files = FileList['spec/**/*.rb']
 end
