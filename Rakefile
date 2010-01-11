@@ -9,7 +9,7 @@ require 'spec/rake/spectask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'DatamapperRackStreamer'
-  s.version = '0.0.1'
+  s.version = '0.1'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README', 'LICENSE']
   s.summary = 'Fetches data via data_mapper and streams it as csv via rack'
