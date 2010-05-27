@@ -1,9 +1,9 @@
 require 'iconv'
 require 'stringio'
+require 'utf_16_bom'
 
 class CsvStreamer
   include Enumerable
-  BYTE_ARRAY_UTF_BOM = [0xff, 0xfe].collect{|byte| byte.chr}.join
   UTF_16_LE_ICONV = Iconv.new('UTF-16LE', 'UTF-8')
   COLUMN_SEPARATOR = "\t"
   ROW_SEPARATOR = "\n"
@@ -28,7 +28,7 @@ class CsvStreamer
   def each
     elements_count = @ids.size
     page_counter = 0
-    yield BYTE_ARRAY_UTF_BOM
+    yield utf16le_bom
     yield to_csv(@csv_sequence)
     while (page_counter * @per_page <= elements_count)  do
       elements = @model_class.all(:id=>@ids[page_counter*@per_page,@per_page])

@@ -4,6 +4,7 @@ require 'spec'
 require 'rack/test'
 require 'rr'
 require 'iconv'
+require 'utf_16_bom'
 
 set :environment, :test
 require 'streamer_app'
@@ -36,7 +37,7 @@ describe StreamerApp do
     p rows
     @csv = rows.collect {|values| values.join(CsvStreamer::COLUMN_SEPARATOR)}.join(CsvStreamer::ROW_SEPARATOR)+CsvStreamer::ROW_SEPARATOR
   utf_16_le_iconv = Iconv.new('UTF-16LE', 'UTF-8')
-  @csv =  [0xff, 0xfe].collect{|byte| byte.chr}.join + utf_16_le_iconv.iconv(@csv)
+  @csv =  utf16le_bom + utf_16_le_iconv.iconv(@csv)
   end
 
   it "should respond to URLs like /demo/$/products.csv" do
@@ -47,6 +48,12 @@ describe StreamerApp do
   it "should return csv for all products of the shop" do
      get '/demo/1/products.csv'
      last_response.body.should == @csv
+  end
+
+  it "should return a BOM and one BOM only" do
+    get '/demo/1/products.csv'
+    last_response.body.should include(utf16le_bom)
+    last_response.body.should_not include(utf16le_bom + utf16le_bom)
   end
 
   ['/demo', '/demo/'].each do |shop_string|
