@@ -8,8 +8,8 @@ class Product
   end
  
   property :id, Serial
-  property :title, String, :length => (1..255), :nullable => false
-  property :shop_id, Integer, :nullable => false, :key=>true 
+  property :title, String, :length => (1..255), :required => true
+  property :shop_id, Integer, :key=>true 
   property :description, Text, :lazy => false
   property :image_url, String, :length => 1000
   property :price, Integer, :min => 1
