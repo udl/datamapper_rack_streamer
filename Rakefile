@@ -7,7 +7,7 @@ require 'rake/rdoctask'
 require 'rake/testtask'
 
 spec = Gem::Specification.new do |s|
-  s.name = 'DatamapperRackStreamer'
+  s.name = 'datamapper_rack_streamer'
   s.version = '0.2'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README', 'LICENSE']
