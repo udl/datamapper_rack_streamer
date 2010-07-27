@@ -11,6 +11,11 @@ group :test do
   gem "rack-test", "0.5.4"
   gem "sinatra", "1.0"
   gem "haml", "3.0.13"
+  gem "ZenTest", "4.3.3"
+  if RUBY_PLATFORM =~ /darwin/
+    gem "autotest-growl", "0.2.4"
+    gem "autotest-fsevent", "0.2.2"
+  end
 end
 
 group :ci do
