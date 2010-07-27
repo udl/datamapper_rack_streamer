@@ -38,16 +38,24 @@ describe StreamerApp do
     @csv = rows.collect {|values| values.join(CsvStreamer::COLUMN_SEPARATOR)}.join(CsvStreamer::ROW_SEPARATOR)+CsvStreamer::ROW_SEPARATOR
   utf_16_le_iconv = Iconv.new('UTF-16LE', 'UTF-8')
   @csv =  utf16le_bom + utf_16_le_iconv.iconv(@csv)
+  @json = Product.all.to_json
   end
 
-  it "should respond to URLs like /demo/$/products.csv" do
-    get '/demo/1/products.csv'
-    last_response.should be_ok
+  ["csv", "json"].each do |format|
+    it "should respond to URLs like /demo/$/products.#{format}" do
+      get "/demo/1/products.#{format}"
+      last_response.should be_ok
+    end
   end
 
   it "should return csv for all products of the shop" do
      get '/demo/1/products.csv'
      last_response.body.should == @csv
+  end
+
+  it "should return json for all products of the shop" do
+     get '/demo/1/products.json'
+     last_response.body.should == @json
   end
 
   it "should return a BOM and one BOM only" do
@@ -57,13 +65,13 @@ describe StreamerApp do
   end
 
   ['/demo', '/demo/'].each do |shop_string|
-  it "should list all shops when calling #{shop_string}" do
-    get shop_string
-    last_response.should be_ok
-    @shops.each do |shop|
-    last_response.body.should include "<a href='/demo/#{shop.id}/products.csv'>#{shop.name}</a>"
+    it "should list all shops when calling #{shop_string}" do
+      get shop_string
+      last_response.should be_ok
+      @shops.each do |shop|
+      last_response.body.should include "<a href='/demo/#{shop.id}/products.csv'>#{shop.name}</a>"
+      end
     end
-  end
   end
 end
 
