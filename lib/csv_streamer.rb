@@ -12,7 +12,7 @@ class CsvStreamer
     @ids = ids
     @model_class = model_class
     @csv_sequence = csv_sequence || self.class.csv_sequence(@model_class)
-    @per_page = per_page
+    @per_page = per_page <= 0 ? 1000 : per_page
     @filter_mappings = filter_mappings
     @block = block
   end
