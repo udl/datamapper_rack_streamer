@@ -51,11 +51,13 @@ describe StreamerApp do
   it "should return csv for all products of the shop" do
      get '/demo/1/products.csv'
      last_response.body.should == @csv
+     last_response.content_type.should == 'text/csv'
   end
 
   it "should return json for all products of the shop" do
      get '/demo/1/products.json'
      last_response.body.should == @json
+     last_response.content_type.should == 'application/json'
   end
 
   it "should return a BOM and one BOM only" do
