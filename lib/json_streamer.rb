@@ -7,7 +7,7 @@ class JsonStreamer
   def initialize(model_class,ids, per_page = 1000, &block)
     @ids = ids
     @model_class = model_class
-    @per_page = per_page
+    @per_page = per_page <= 0 ? 1000 : per_page
     @block = block
   end
 
@@ -20,7 +20,7 @@ class JsonStreamer
       elements.each do |element|
         element = @block.call(element) unless @block.nil?
         yield element.to_json
-        yield "," unless element == elements.last
+        yield "," unless element.id == @ids.last
       end
       page_counter = page_counter + 1
     end

@@ -60,6 +60,14 @@ describe StreamerApp do
      last_response.content_type.should == 'application/json'
   end
 
+  it "should return json for all products of the shop and user defined page sizes" do
+    -1.upto(4) do |i|
+      get "/demo/1/products.json?page_size=#{i}"
+      last_response.body.should == @json
+      last_response.content_type.should == 'application/json'
+    end
+  end
+
   it "should return a BOM and one BOM only" do
     get '/demo/1/products.csv'
     last_response.body.should include(utf16le_bom)
