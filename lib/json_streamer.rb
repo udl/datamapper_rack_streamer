@@ -4,7 +4,7 @@ class JsonStreamer
   include Enumerable
 
   attr_reader :json_sequence
-  def initialize(model_class,ids, per_page = 1000, header = nil, footer = nil, &block)
+  def initialize(model_class,ids, per_page = 1000, header = '{ "items" : ', footer = '}', &block)
     @ids = ids
     @model_class = model_class
     @per_page = per_page <= 0 ? 1000 : per_page
