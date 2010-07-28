@@ -12,9 +12,9 @@ class StreamerApp < Sinatra::Base
   get '/demo/:shop_id/products.:format/?' do |shop_id, format|
     ids = repository(:products).adapter.query('SELECT id FROM products WHERE shop_id = ?', shop_id.to_i)
     if (format == 'csv')
-      [200, {'Content-Type' => 'text/csv'}, CsvStreamer.new(Product,ids)]
+      [200, {'content-type' => 'text/csv'}, CsvStreamer.new(Product,ids)]
     elsif (format == 'json')
-      [200, {'Content-Type' => 'application/json'}, JsonStreamer.new(Product,ids)]
+      [200, {'content-type' => 'application/json'}, JsonStreamer.new(Product,ids, params[:page_size].to_i)]
     else
       halt 415, "Supported Types are CSV and JSON."
     end
