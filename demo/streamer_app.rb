@@ -15,7 +15,7 @@ class StreamerApp < Sinatra::Base
     if (format == 'csv')
       [200, {'content-type' => 'text/csv'}, CsvStreamer.new(Product,ids,nil,page_size)]
     elsif (format == 'json')
-      [200, {'content-type' => 'application/json'}, JsonStreamer.new(Product,ids, page_size)]
+      [200, {'content-type' => 'application/json'}, JsonStreamer.new(Product, ids, nil, page_size)]
     else
       halt 415, "Supported Types are CSV and JSON."
     end

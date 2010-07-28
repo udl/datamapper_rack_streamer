@@ -14,12 +14,26 @@ describe JsonStreamer do
       @footer = '}'
     end
     it "should apply the header and footer to the response" do
-      streamer = JsonStreamer.new(Product, @ids, 1, @header, @footer)
+      desired_output_fields = Product.properties.map{ |prop| prop.name }
+      streamer = JsonStreamer.new(Product, @ids, desired_output_fields,  1, @header, @footer)
+      result_string = read_stream_into_string(streamer)
+      result_string.should == @header + Product.all.to_json + @footer
+      JSON.parse(result_string)
+    end
+    it "should return desired fields only" do
+      fields = [:id, :title]
+      streamer = JsonStreamer.new(Product, @ids, fields, 1, @header, @footer)
+      result_string = read_stream_into_string(streamer)
+      result_string.should == @header + Product.all.map{|p| {:id => p.id, :title => p.title} }.to_json + @footer
+      JSON.parse(result_string)
+    end
+
+    private
+    def read_stream_into_string(streamer)
       result_string = streamer.inject("") do |strg,elem|
         strg = strg + elem
       end
-      result_string.should == @header + Product.all.to_json + @footer
-      JSON.parse(result_string)
+      result_string
     end
   end
 end

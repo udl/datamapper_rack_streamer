@@ -36,7 +36,7 @@ describe StreamerApp do
     @csv = rows.collect {|values| values.join(CsvStreamer::COLUMN_SEPARATOR)}.join(CsvStreamer::ROW_SEPARATOR)+CsvStreamer::ROW_SEPARATOR
     utf_16_le_iconv = Iconv.new('UTF-16LE', 'UTF-8')
     @csv =  utf16le_bom + utf_16_le_iconv.iconv(@csv)
-    @json = Product.all.to_json
+    @json = "{ \"items\" : #{Product.all.to_json }}"
   end
 
   ["csv", "json"].each do |format|
