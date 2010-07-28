@@ -10,7 +10,7 @@ PATH_TO_HAML = File.expand_path(File.dirname(__FILE__)+'/demo.haml')
 class StreamerApp < Sinatra::Base
 
   get '/demo/:shop_id/products.:format/?' do |shop_id, format|
-    ids = repository(:products).adapter.query('SELECT id FROM products WHERE shop_id = ?', shop_id.to_i)
+    ids = repository(:products).adapter.select('SELECT id FROM products WHERE shop_id = ?', shop_id.to_i)
     page_size = params[:page_size].to_i
     if (format == 'csv')
       [200, {'content-type' => 'text/csv'}, CsvStreamer.new(Product,ids,nil,page_size)]
