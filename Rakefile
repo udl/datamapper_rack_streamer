@@ -8,7 +8,7 @@ require 'rake/testtask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'datamapper_rack_streamer'
-  s.version = '0.4'
+  s.version = '0.5'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README', 'LICENSE']
   s.summary = 'Fetches data via data_mapper and streams it as csv via rack'
