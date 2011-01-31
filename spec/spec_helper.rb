@@ -1,6 +1,6 @@
 $LOAD_PATH << File.dirname(__FILE__)+'/../lib/'
-$LOAD_PATH << File.dirname(__FILE__)+'/../demo/'
-require "spec" # Satisfies Autotest and anyone else not using the Rake tasks
+$LOAD_PATH << File.dirname(__FILE__)+'/../'
+require "rspec" # Satisfies Autotest and anyone else not using the Rake tasks
 require 'rr'
 require 'datamapper'
 require 'ostruct'
@@ -13,8 +13,8 @@ DataMapper.setup(:products, 'sqlite3::memory:')
 Shop.auto_migrate!
 Product.auto_migrate!
 
-Spec::Runner.configure do |config|
- config.mock_with RR::Adapters::Rspec
+RSpec.configure do |config|
+ config.mock_with :rr
   config.after(:each) do
     repository(:products) do
       while repository.adapter.current_transaction

@@ -1,13 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
-require 'streamer_app'  # <-- your sinatra app
-require 'spec'
+require 'rspec'
 require 'rack/test'
 require 'rr'
 require 'iconv'
 require 'utf_16_bom'
+require 'demo/streamer_app'
 
 set :environment, :test
-require 'streamer_app'
 
 describe StreamerApp do
   include Rack::Test::Methods

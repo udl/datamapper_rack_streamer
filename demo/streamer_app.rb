@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'haml'
-require 'model/shop'
-require 'model/product'
+require File.dirname(__FILE__)+'/model/shop'
+require File.dirname(__FILE__)+'/model/product'
 require File.dirname(__FILE__)+'/../lib/csv_streamer'
 require File.dirname(__FILE__)+'/../lib/json_streamer'
 
